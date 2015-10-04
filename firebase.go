@@ -302,7 +302,7 @@ func newTimeoutClient(connectTimeout time.Duration, readWriteTimeout time.Durati
 	return &http.Client{
 		Transport: &http.Transport{
 			Dial: TimeoutDialer(connectTimeout, readWriteTimeout),
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		},
 	}
 }
