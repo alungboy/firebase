@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"crypto/tls"
 )
 
 // Api is the interface for interacting with Firebase.
@@ -253,6 +254,7 @@ func (f *f) Call(method, path, auth string, body []byte, params map[string]strin
 	if len(qs) > 0 {
 		path += "?" + qs.Encode()
 	}
+	
 
 	req, err := http.NewRequest(method, path, bytes.NewReader(body))
 	if err != nil {
@@ -300,6 +302,7 @@ func newTimeoutClient(connectTimeout time.Duration, readWriteTimeout time.Durati
 	return &http.Client{
 		Transport: &http.Transport{
 			Dial: TimeoutDialer(connectTimeout, readWriteTimeout),
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true}
 		},
 	}
 }
